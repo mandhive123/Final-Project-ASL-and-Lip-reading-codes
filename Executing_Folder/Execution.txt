@@ -1,0 +1,410 @@
+================================================================================
+                    SIGNEASE - ASL & LIP READING SYSTEM
+                         INSTALLATION & SETUP GUIDE
+================================================================================
+
+📋 TABLE OF CONTENTS
+--------------------
+1. System Requirements
+2. Initial Setup
+3. Installation Steps
+4. Running the Application
+5. Troubleshooting
+6. Features Overview
+7. Contact & Support
+
+================================================================================
+1. SYSTEM REQUIREMENTS
+================================================================================
+
+✅ Required:
+- Python 3.11 (Download from: https://www.python.org/downloads/)
+- Webcam (for ASL recognition and lip reading)
+- 4GB RAM minimum (8GB recommended)
+- Windows 10/11, macOS, or Linux
+
+✅ Check Python Installation:
+Open Command Prompt/Terminal and run:
+    python --version
+    OR
+    py --version
+
+Should show: Python 3.11.x
+
+
+================================================================================
+2. INITIAL SETUP
+================================================================================
+
+Step 1: Extract the Project
+----------------------------
+- Extract the downloaded ZIP file to a location like:
+  C:\Users\YourName\Desktop\Sign_In_Project
+  OR
+  ~/Desktop/Sign_In_Project (Mac/Linux)
+
+Step 2: Open Terminal/Command Prompt
+-------------------------------------
+Windows: Press Win + R, type "cmd", press Enter
+Mac: Press Cmd + Space, type "terminal", press Enter
+Linux: Press Ctrl + Alt + T
+
+
+================================================================================
+3. INSTALLATION STEPS
+================================================================================
+
+Step 1: Navigate to Project Folder
+-----------------------------------
+Windows:
+    cd C:\Users\YourName\Desktop\Sign_In_Project
+
+Mac/Linux:
+    cd ~/Desktop/Sign_In_Project
+
+(Replace "YourName" with your actual username)
+
+
+Step 2: Create Virtual Environment
+-----------------------------------
+Windows:
+    py -3.11 -m venv asl_env_py311
+
+Mac/Linux:
+    python3.11 -m venv asl_env_py311
+
+
+Step 3: Activate Virtual Environment
+-------------------------------------
+Windows (Command Prompt):
+    asl_env_py311\Scripts\activate
+
+Windows (PowerShell):
+    asl_env_py311\Scripts\Activate.ps1
+
+Mac/Linux:
+    source asl_env_py311/bin/activate
+
+✅ You should see (asl_env_py311) at the start of your command line
+
+
+Step 4: Upgrade pip (Recommended)
+----------------------------------
+    python -m pip install --upgrade pip
+
+
+Step 5: Install Required Packages
+----------------------------------
+Run this command (may take 5-10 minutes):
+
+    pip install flask opencv-python numpy pillow torch torchvision ultralytics mediapipe
+
+Individual packages:
+- flask              → Web framework
+- opencv-python      → Computer vision
+- numpy              → Numerical computing
+- pillow             → Image processing
+- torch              → Deep learning
+- torchvision        → Vision utilities
+- ultralytics        → YOLOv11 for ASL detection
+- mediapipe          → Lip reading
+
+
+Step 6: Verify Model File
+--------------------------
+Check if this file exists:
+    dataset/trained_model/best.pt
+
+If missing:
+- The system will run in LIMITED MODE
+- You'll need to train or download the YOLOv11 model
+- Place it in: dataset/trained_model/best.pt
+
+
+================================================================================
+4. RUNNING THE APPLICATION
+================================================================================
+
+Step 1: Make Sure Virtual Environment is Activated
+---------------------------------------------------
+You should see (asl_env_py311) in your terminal
+
+
+Step 2: Run the Application
+----------------------------
+    python app.py
+
+
+Step 3: Expected Output
+------------------------
+You should see something like:
+
+================================================================================
+SIGNEASE - ASL & IMPROVED LIP READING
+================================================================================
+ASL Recognition: READY
+Signs: 26
+Classes: A, B, C, D, E...
+
+Lip Reading: READY (Temporal Sequence Analysis)
+Words: 8
+Detectable: hello, yes, no, thank you, please...
+Min sequence: 10 frames
+Cooldown: 2.0s between words
+================================================================================
+Server: http://localhost:5000
+================================================================================
+
+
+Step 4: Open Your Browser
+--------------------------
+Go to: http://localhost:5000
+
+Supported browsers:
+✅ Google Chrome (Recommended)
+✅ Microsoft Edge
+✅ Firefox
+⚠️ Safari (may have camera issues)
+
+
+Step 5: Allow Camera Access
+----------------------------
+Your browser will ask for camera permission - click "Allow"
+
+
+================================================================================
+5. TROUBLESHOOTING
+================================================================================
+
+Problem: "Python not found"
+---------------------------
+Solution:
+1. Install Python 3.11 from https://www.python.org/downloads/
+2. During installation, CHECK "Add Python to PATH"
+3. Restart your terminal
+
+
+Problem: "pip not found"
+------------------------
+Solution:
+    python -m ensurepip --upgrade
+    OR
+    py -m ensurepip --upgrade
+
+
+Problem: "Module not found" errors
+-----------------------------------
+Solution: Reinstall packages
+    pip install --upgrade flask opencv-python numpy pillow torch torchvision ultralytics mediapipe
+
+
+Problem: "Model not found" error
+---------------------------------
+Solution:
+- Check if dataset/trained_model/best.pt exists
+- If missing, download or train the YOLOv11 model
+- The app will run in LIMITED MODE without it
+
+
+Problem: Camera not working
+----------------------------
+Solution:
+1. Check camera permissions in browser settings
+2. Try a different browser (Chrome recommended)
+3. Close other apps using the camera
+4. Restart browser and try again
+
+
+Problem: "Port 5000 already in use"
+------------------------------------
+Solution:
+1. Close other apps using port 5000
+2. OR change port in app.py (last line):
+   app.run(debug=True, host='0.0.0.0', port=5001)
+
+
+Problem: Torch/CUDA errors
+---------------------------
+Solution:
+    pip uninstall torch torchvision
+    pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+
+
+Problem: MediaPipe not working
+-------------------------------
+Solution:
+    pip uninstall mediapipe
+    pip install mediapipe==0.10.9
+
+
+================================================================================
+6. FEATURES OVERVIEW
+================================================================================
+
+✨ ASL to Text (Sign Language Recognition)
+------------------------------------------
+- Real-time detection of 26 ASL signs
+- Uses YOLOv11 deep learning model
+- Auto-saves detections to history
+- Adjustable confidence threshold
+
+📹 Lip Reading
+--------------
+- Detects 8 common words: hello, yes, no, thank you, please, help, water, food
+- Uses MediaPipe Face Mesh
+- Temporal sequence analysis
+- 2-second cooldown between words
+
+📝 Text to ASL Animation
+------------------------
+- Converts typed text to sign language animations
+- Supports 40+ words and phrases
+- Multi-word phrase recognition
+- Visual GIF animations
+
+📊 History & Statistics
+-----------------------
+- Auto-saves all conversions
+- SQLite database storage
+- Filter by conversion type
+- Export and analysis features
+
+
+================================================================================
+7. QUICK REFERENCE COMMANDS
+================================================================================
+
+Navigate to project:
+    cd C:\Users\YourName\Desktop\Sign_In_Project
+
+Activate environment:
+    asl_env_py311\Scripts\activate           (Windows CMD)
+    asl_env_py311\Scripts\Activate.ps1       (Windows PowerShell)
+    source asl_env_py311/bin/activate        (Mac/Linux)
+
+Run application:
+    python app.py
+
+Stop application:
+    Press Ctrl + C in terminal
+
+Deactivate environment:
+    deactivate
+
+Update packages:
+    pip install --upgrade flask opencv-python numpy pillow torch ultralytics mediapipe
+
+
+================================================================================
+8. COMPLETE FIRST-TIME SETUP (COPY & PASTE)
+================================================================================
+
+Windows (Command Prompt):
+-------------------------
+cd C:\Users\YourName\Desktop\Sign_In_Project
+py -3.11 -m venv asl_env_py311
+asl_env_py311\Scripts\activate
+python -m pip install --upgrade pip
+pip install flask opencv-python numpy pillow torch torchvision ultralytics mediapipe
+python app.py
+
+
+Mac/Linux:
+----------
+cd ~/Desktop/Sign_In_Project
+python3.11 -m venv asl_env_py311
+source asl_env_py311/bin/activate
+python -m pip install --upgrade pip
+pip install flask opencv-python numpy pillow torch torchvision ultralytics mediapipe
+python app.py
+
+
+================================================================================
+9. DAILY USAGE (AFTER SETUP)
+================================================================================
+
+Every time you want to run the app:
+
+1. Open terminal
+2. Navigate to project:
+   cd C:\Users\YourName\Desktop\Sign_In_Project
+
+3. Activate environment:
+   asl_env_py311\Scripts\activate
+
+4. Run app:
+   python app.py
+
+5. Open browser:
+   http://localhost:5000
+
+6. When done, press Ctrl+C to stop
+
+
+================================================================================
+10. PROJECT STRUCTURE
+================================================================================
+
+Sign_In_Project/
+├── app.py                          ← Main application file
+├── asl_env_py311/                  ← Virtual environment (don't delete!)
+├── dataset/
+│   └── trained_model/
+│       └── best.pt                 ← YOLOv11 model file
+├── static/
+│   └── animations/                 ← ASL animation GIFs
+├── templates/
+│   └── index.html                  ← Web interface
+├── asl_history.db                  ← Database (auto-created)
+└── HOW_TO_RUN.txt                  ← This file
+
+
+================================================================================
+11. SUPPORT & CONTACT
+================================================================================
+
+GitHub Repository:
+https://github.com/mandhive123/Final-Project-ASL-and-Lip-reading-codes
+
+Common Issues:
+- Check GitHub Issues section
+- Search closed issues for solutions
+
+Need Help?
+- Open a new issue on GitHub
+- Include error messages
+- Describe your operating system
+
+
+================================================================================
+12. NOTES
+================================================================================
+
+⚠️ Important:
+- DO NOT delete asl_env_py311 folder (virtual environment)
+- DO NOT upload asl_env_py311 to GitHub (already in .gitignore)
+- Keep dataset/trained_model/best.pt for ASL recognition
+- Camera permission is required for detection features
+
+💡 Tips:
+- Use Chrome for best camera compatibility
+- Close other camera apps before running
+- First detection may take 2-3 seconds
+- Lip reading works best with good lighting
+- Keep face centered for lip reading
+
+🔒 Privacy:
+- All processing happens locally on your computer
+- No data is sent to external servers
+- Camera feed is not recorded
+- History is stored locally in asl_history.db
+
+
+================================================================================
+                            HAPPY SIGNING! 👋
+================================================================================
+
+Last Updated: January 2026
+Version: 1.0
+Python: 3.11
+Framework: Flask
