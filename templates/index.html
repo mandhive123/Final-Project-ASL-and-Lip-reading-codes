@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignEase - ASL Language Converter</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Window Controls -->
+    <div class="window-controls">
+        <div class="window-title">
+            <i class='bx bxs-bolt-circle'></i>
+            SIGNEASE
+        </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo" onclick="expandSidebar()">
+                <div class="logo-icon">
+                    <i class='bx bx-accessibility'></i>
+                </div>
+                <div class="logo-content">
+                    <span class="logo-text">SignEase</span>
+                    <span class="logo-subtitle">AMG Performance</span>
+                </div>
+            </div>
+            <button class="menu-toggle" onclick="toggleSidebar()">
+                <i class='bx bx-menu'></i>
+            </button>
+        </div>
+
+        <div class="sidebar-content">
+            <!-- Main Features -->
+            <div class="menu-section">
+                <div class="menu-item active" onclick="switchScreen('dashboard')" data-screen="dashboard">
+                    <i class='bx bx-home-alt'></i>
+                    <span class="menu-text">Dashboard</span>
+                    <div class="menu-accent"></div>
+                </div>
+                
+                <div class="menu-item" onclick="switchScreen('asl-to-text')" data-screen="asl-to-text">
+                    <i class='bx bx-video'></i>
+                    <span class="menu-text">ASL to Text</span>
+                    <div class="menu-accent"></div>
+                </div>
+                
+                <div class="menu-item" onclick="switchScreen('text-to-asl')" data-screen="text-to-asl">
+                    <i class='bx bx-text'></i>
+                    <span class="menu-text">Text to ASL</span>
+                    <div class="menu-accent"></div>
+                </div>
+                
+                <div class="menu-item" onclick="switchScreen('voice-to-asl')" data-screen="voice-to-asl">
+                    <i class='bx bx-microphone'></i>
+                    <span class="menu-text">Voice to ASL</span>
+                    <div class="menu-accent"></div>
+                </div>
+                
+                <div class="menu-item" onclick="switchScreen('lip-sync')" data-screen="lip-sync">
+                    <i class='bx bx-face'></i>
+                    <span class="menu-text">Lip Reading</span>
+                    <div class="menu-accent"></div>
+                </div>
+            </div>
+
+            <!-- Tools Section -->
+            <div class="menu-section">
+                <div class="section-title">
+                    <i class='bx bx-wrench'></i>
+                    PERFORMANCE TOOLS
+                </div>
+                
+                <div class="menu-item" onclick="switchScreen('practice')" data-screen="practice">
+                    <i class='bx bx-book-reader'></i>
+                    <span class="menu-text">Practice Mode</span>
+                    <div class="menu-accent"></div>
+                </div>
+                
+                <div class="menu-item" onclick="switchScreen('dictionary')" data-screen="dictionary">
+                    <i class='bx bx-book'></i>
+                    <span class="menu-text">ASL Dictionary</span>
+                    <div class="menu-accent"></div>
+                </div>
+            </div>
+
+            <!-- Account Section -->
+            <div class="menu-section">
+                <div class="section-title">
+                    <i class='bx bx-user-circle'></i>
+                    ACCOUNT
+                </div>
+                
+                <div class="menu-item" onclick="switchScreen('history')" data-screen="history">
+                    <i class='bx bx-history'></i>
+                    <span class="menu-text">History</span>
+                    <span class="notification-badge">3</span>
+                    <div class="menu-accent"></div>
+                </div>
+                
+                <div class="menu-item" onclick="switchScreen('settings')" data-screen="settings">
+                    <i class='bx bx-cog'></i>
+                    <span class="menu-text">Settings</span>
+                    <div class="menu-accent"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Profile -->
+        <div class="user-profile">
+            <div class="user-avatar">
+                <i class='bx bx-user'></i>
+            </div>
+            <div class="user-info">
+                <div class="user-name">Bihansith Mandhive</div>
+                <div class="user-email">bihansithmandhiveharischandra@gmail.com</div>
+            </div>
+            <button class="profile-menu">
+                <i class='bx bx-dots-horizontal-rounded'></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content" id="mainContent">
+        
+        <!-- Dashboard Screen -->
+        <div class="screen active" id="dashboard-screen">
+            <div class="screen-header">
+                <h1>
+                    <i class='bx bxs-dashboard'></i>
+                    Performance Dashboard
+                </h1>
+                <p>Select your conversion mode to begin</p>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-card" onclick="switchScreen('asl-to-text')">
+                    <div class="feature-icon">
+                        <i class='bx bx-video'></i>
+                    </div>
+                    <h3>ASL to Text</h3>
+                    <p>Real-time sign language recognition with YOLOv11</p>
+                    <div class="card-accent"></div>
+                </div>
+                <div class="feature-card" onclick="switchScreen('text-to-asl')">
+                    <div class="feature-icon">
+                        <i class='bx bx-text'></i>
+                    </div>
+                    <h3>Text to ASL</h3>
+                    <p>Transform text into sign language animations</p>
+                    <div class="card-accent"></div>
+                </div>
+                <div class="feature-card" onclick="switchScreen('voice-to-asl')">
+                    <div class="feature-icon">
+                        <i class='bx bx-microphone'></i>
+                    </div>
+                    <h3>Voice to ASL</h3>
+                    <p>Voice recognition and conversion system</p>
+                    <div class="card-accent"></div>
+                </div>
+                <div class="feature-card" onclick="switchScreen('lip-sync')">
+                    <div class="feature-icon">
+                        <i class='bx bx-face'></i>
+                    </div>
+                    <h3>Lip Reading</h3>
+                    <p>Advanced lip movement detection AI</p>
+                    <div class="card-accent"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ASL to Text Screen -->
+        <div class="screen" id="asl-to-text-screen">
+            <div class="screen-header">
+                <h1>
+                    <i class='bx bx-video'></i>
+                    ASL to Text Converter
+                </h1>
+                <p>YOLOv11 powered real-time detection system</p>
+            </div>
+            <div class="converter-interface">
+                <div class="camera-section amg-panel">
+                    <div class="panel-header">
+                        <i class='bx bx-camera'></i>
+                        Camera Feed
+                    </div>
+                    
+                    <!-- Camera Feed -->
+                    <video id="videoElement" style="display: none; width: 100%; height: 300px; border-radius: 8px;"></video>
+                    <canvas id="canvasElement" style="display: none;"></canvas>
+                    
+                    <!-- Camera Placeholder -->
+                    <div class="camera-placeholder" id="cameraPlaceholder">
+                        <i class='bx bx-video-recording'></i>
+                        <p>Camera feed will appear here</p>
+                        <button class="amg-button" onclick="startCamera()">
+                            <i class='bx bx-play-circle'></i>
+                            Initialize Camera
+                        </button>
+                    </div>
+                    
+                    <!-- Camera Status -->
+                    <div class="status-bar" id="cameraStatus">
+                        <i class='bx bx-check-circle'></i>
+                        Ready to start
+                    </div>
+                    
+                    <!-- YOLOv11 Detection Interface -->
+                    <div id="aslYoloInterface" class="detection-panel">
+                        <div class="detection-header">
+                            <i class='bx bxs-brain'></i>
+                            YOLOv11 Detection System
+                        </div>
+                        
+                        <div class="detection-grid">
+                            <div class="detection-stat">
+                                <div class="stat-label">Current Sign</div>
+                                <div id="yoloCurrentSign" class="stat-value primary">-</div>
+                            </div>
+                            <div class="detection-stat">
+                                <div class="stat-label">Confidence</div>
+                                <div id="yoloConfidence" class="stat-value accent">-</div>
+                            </div>
+                        </div>
+                        
+                        <div class="system-status" id="yoloModelStatus">
+                            <i class='bx bx-info-circle'></i>
+                            <strong>Status:</strong> <span id="yoloStatus">Checking...</span>
+                        </div>
+                        
+                        <div class="metrics-grid">
+                            <div class="metric-box">
+                                <div class="metric-label">Detections</div>
+                                <div id="yoloDetections" class="metric-value">0</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-label">Total Signs</div>
+                                <div id="yoloTotalSigns" class="metric-value">0</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-label">Model</div>
+                                <div id="yoloModelLoaded" class="metric-value">
+                                    <i class='bx bx-x'></i>
+                                </div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-label">Frames</div>
+                                <div id="yoloFrames" class="metric-value">0</div>
+                            </div>
+                        </div>
+                        
+                        <div class="info-tip">
+                            <i class='bx bx-info-circle'></i>
+                            YOLOv11 detects letters (A-Z) and word signs (Hello, Thanks, etc.)
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="output-section">
+                    <div class="text-output amg-panel">
+                        <div class="panel-header">
+                            <div>
+                                <i class='bx bx-text'></i>
+                                Converted Text
+                            </div>
+                            <button class="icon-btn" onclick="clearTextOutput()">
+                                <i class='bx bx-trash'></i>
+                            </button>
+                        </div>
+                        <div class="text-area" id="aslTextOutput">
+                            Text will appear here as you sign...
+                        </div>
+                    </div>
+                    
+                    <div class="controls amg-panel">
+                        <button class="control-button primary" onclick="startProcessing()" id="startBtn">
+                            <i class='bx bx-play'></i>
+                            Start Detection
+                        </button>
+                        <button class="control-button secondary" onclick="stopProcessing()" id="pauseBtn">
+                            <i class='bx bx-pause'></i>
+                            Pause
+                        </button>
+                        <button class="control-button secondary" onclick="clearTextOutput()">
+                            <i class='bx bx-trash'></i>
+                            Clear
+                        </button>
+                        <button class="control-button danger" onclick="stopCamera()" id="stopBtn">
+                            <i class='bx bx-stop'></i>
+                            Stop Camera
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Text to ASL Screen -->
+        <div class="screen" id="text-to-asl-screen">
+            <div class="screen-header">
+                <h1>
+                    <i class='bx bx-text'></i>
+                    Text to ASL Converter
+                </h1>
+                <p>Transform text into sign language animations</p>
+            </div>
+            <div class="converter-interface">
+                <div class="input-section amg-panel">
+                    <div class="panel-header">
+                        <i class='bx bx-edit'></i>
+                        Text Input
+                    </div>
+                    <div class="text-input-area">
+                        <textarea placeholder="Enter text to convert to ASL..." id="textInput"></textarea>
+                        <button class="amg-button">
+                            <i class='bx bx-send'></i>
+                            Convert to ASL
+                        </button>
+                    </div>
+                </div>
+                <div class="output-section">
+                    <div class="asl-output amg-panel">
+                        <div class="panel-header">
+                            <span style="display: flex; align-items: center; gap: 8px;">
+                                <i class='bx bx-user'></i>
+                                ASL Animation
+                            </span>
+                            <div class="d-flex gap-2">
+                                <button class="icon-btn">
+                                    <i class='bx bx-trash'></i>
+                                </button>
+                                <button class="icon-btn">
+                                    <i class='bx bx-refresh'></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="animation-area">
+                            <i class='bx bx-user'></i>
+                            <p>ASL animation will appear here</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Voice to ASL Screen -->
+        <div class="screen" id="voice-to-asl-screen">
+            <div class="screen-header">
+                <h1>
+                    <i class='bx bx-microphone'></i>
+                    Voice to ASL Converter
+                </h1>
+                <p>Voice recognition and real-time conversion</p>
+            </div>
+            <div class="converter-interface">
+                <div class="voice-section amg-panel">
+                    <div class="panel-header">
+                        <i class='bx bx-microphone'></i>
+                        Voice Input
+                    </div>
+                    <div class="microphone-area">
+                        <button class="mic-button">
+                            <i class='bx bx-microphone'></i>
+                        </button>
+                        <p>Click to start recording</p>
+                        <div class="voice-visualizer">
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="output-section">
+                    <div class="transcription amg-panel">
+                        <div class="panel-header">
+                            <i class='bx bx-text'></i>
+                            Transcription
+                            <button class="icon-btn" onclick="clearVoiceOutput()">
+                                <i class='bx bx-trash'></i>
+                            </button>
+                        </div>
+                        <div class="transcribed-text">Your speech will appear here...</div>
+                    </div>
+                    <div class="asl-output amg-panel">
+                        <div class="panel-header">
+                            <i class='bx bx-user'></i>
+                            ASL Animation
+                        </div>
+                        <div class="animation-area">
+                            <i class='bx bx-user'></i>
+                            <p>ASL animation will appear here</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lip Reading Screen -->
+        <div class="screen" id="lip-sync-screen">
+            <div class="screen-header">
+                <h1>
+                    <i class='bx bx-face'></i>
+                    Lip Reading System
+                </h1>
+                <p>AI-powered lip movement detection with machine learning</p>
+            </div>
+            <div class="converter-interface">
+                <div class="camera-section amg-panel">
+                    <div class="panel-header">
+                        <i class='bx bx-camera'></i>
+                        Camera Feed
+                    </div>
+                    
+                    <!-- Camera Feed -->
+                    <video id="lipVideoElement" style="display: none; width: 100%; height: 300px; border-radius: 8px;"></video>
+                    <canvas id="lipCanvasElement" style="display: none;"></canvas>
+                    
+                    <!-- Camera Placeholder -->
+                    <div class="camera-placeholder" id="lipCameraPlaceholder">
+                        <i class='bx bx-video-recording'></i>
+                        <p>Camera feed for lip reading will appear here</p>
+                        <button class="amg-button" onclick="startLipCamera()">
+                            <i class='bx bx-play-circle'></i>
+                            Initialize Camera
+                        </button>
+                    </div>
+                    
+                    <!-- Camera Status -->
+                    <div class="status-bar" id="lipCameraStatus">
+                        <i class='bx bx-check-circle'></i>
+                        Ready to start
+                    </div>
+                    
+                    <!-- Lip Reading Interface -->
+                    <div id="lipReadingInterface" class="detection-panel lip-panel">
+                        <div class="detection-header">
+                            <i class='bx bxs-brain'></i>
+                            Lip Reading AI System
+                        </div>
+                        
+                        <div class="detection-grid">
+                            <div class="detection-stat">
+                                <div class="stat-label">Detected Word</div>
+                                <div id="lipCurrentWord" class="stat-value primary">-</div>
+                            </div>
+                            <div class="detection-stat">
+                                <div class="stat-label">Confidence</div>
+                                <div id="lipConfidence" class="stat-value accent">-</div>
+                            </div>
+                        </div>
+                        
+                        <div class="info-tip">
+                            <i class='bx bx-info-circle'></i>
+                            Detectable: HELLO, YES, NO, THANK YOU, SORRY, PLEASE, HELP, OK, STOP, GO
+                        </div>
+                        
+                        <div class="metrics-grid three-col">
+                            <div class="metric-box">
+                                <div class="metric-label">Words</div>
+                                <div id="lipWordsCount" class="metric-value">0</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-label">Predictions</div>
+                                <div id="lipPredCount" class="metric-value">0</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-label">Frames</div>
+                                <div id="lipFrameCount" class="metric-value">0</div>
+                            </div>
+                        </div>
+                        
+                        <div class="warning-tip">
+                            <i class='bx bx-error-circle'></i>
+                            Speak SLOWLY with EXAGGERATED mouth movements for best results
+                        </div>
+                    </div>
+                    
+                    <!-- Learning Status Badge -->
+                    <div id="lipLearningBadge" class="learning-badge" style="display: none;">
+                        <div class="badge-title">
+                            <i class='bx bxs-brain'></i>
+                            AI Learning Active
+                        </div>
+                        <div class="badge-stats">
+                            <span id="rlSampleCount">0</span> samples | 
+                            <span id="rlAccuracy">0%</span> accuracy
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="output-section">
+                    <div class="text-output amg-panel">
+                        <div class="panel-header">
+                            <div>
+                                <i class='bx bx-text'></i>
+                                Lip Reading Output
+                            </div>
+                            <button class="icon-btn" onclick="clearLipOutput()">
+                                <i class='bx bx-trash'></i>
+                            </button>
+                        </div>
+                        <div class="text-area" id="lipTextOutput">
+                            Lip reading output will appear here...
+                        </div>
+                    </div>
+                    
+                    <div class="controls amg-panel">
+                        <button class="control-button primary" onclick="startLipProcessing()" id="lipStartBtn">
+                            <i class='bx bx-play'></i>
+                            Start Detection
+                        </button>
+                        <button class="control-button secondary" onclick="stopLipProcessing()" id="lipPauseBtn">
+                            <i class='bx bx-pause'></i>
+                            Pause
+                        </button>
+                        <button class="control-button secondary" onclick="clearLipOutput()">
+                            <i class='bx bx-trash'></i>
+                            Clear
+                        </button>
+                        <button class="control-button danger" onclick="stopLipCamera()" id="lipStopBtn">
+                            <i class='bx bx-stop'></i>
+                            Stop Camera
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Other screens (Practice, Dictionary, History, Settings) -->
+        <div class="screen" id="practice-screen">
+            <div class="screen-header">
+                <h1>
+                    <i class='bx bx-book-reader'></i>
+                    Practice Mode
+                </h1>
+                <p>Interactive ASL training exercises</p>
+            </div>
+            <div class="practice-content amg-panel">
+                <i class='bx bx-dumbbell' style="font-size: 64px; color: #04BFAD; margin-bottom: 20px;"></i>
+                <p>Practice exercises will be implemented here...</p>
+            </div>
+        </div>
+
+        <div class="screen" id="dictionary-screen">
+            <div class="screen-header">
+                <h1>
+                    <i class='bx bx-book'></i>
+                    ASL Dictionary
+                </h1>
+                <p>Comprehensive sign language reference</p>
+            </div>
+            <div class="dictionary-content amg-panel">
+                <i class='bx bx-library' style="font-size: 64px; color: #04BFAD; margin-bottom: 20px;"></i>
+                <p>Dictionary interface will be implemented here...</p>
+            </div>
+        </div>
+
+        <div class="screen" id="history-screen">
+            <div class="screen-header">
+                <h1>
+                    <i class='bx bx-history'></i>
+                    Conversion History
+                </h1>
+                <p>Performance analytics and previous conversions</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card card-1">
+                    <div class="stat-icon">
+                        <i class='bx bx-line-chart'></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-label">Total Conversions</div>
+                        <div class="stat-number" id="totalConversions">0</div>
+                    </div>
+                </div>
+                <div class="stat-card card-2">
+                    <div class="stat-icon">
+                        <i class='bx bx-video'></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-label">ASL to Text</div>
+                        <div class="stat-number" id="aslToTextCount">0</div>
+                    </div>
+                </div>
+                <div class="stat-card card-3">
+                    <div class="stat-icon">
+                        <i class='bx bx-face'></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-label">Lip Reading</div>
+                        <div class="stat-number" id="lipReadingCount">0</div>
+                    </div>
+                </div>
+                <div class="stat-card card-4">
+                    <div class="stat-icon">
+                        <i class='bx bx-target-lock'></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-label">Avg Confidence</div>
+                        <div class="stat-number" id="avgConfidence">0%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="history-controls amg-panel">
+                <select id="typeFilter" onchange="filterHistory()" class="amg-select">
+                    <option value="all">All Types</option>
+                    <option value="asl-to-text">ASL to Text</option>
+                    <option value="lip-reading">Lip Reading</option>
+                    <option value="text-to-asl">Text to ASL</option>
+                    <option value="voice-to-asl">Voice to ASL</option>
+                </select>
+                <button onclick="refreshHistory()" class="control-button secondary">
+                    <i class='bx bx-refresh'></i> Refresh
+                </button>
+                <button onclick="clearAllHistory()" class="control-button danger">
+                    <i class='bx bx-trash'></i> Clear All
+                </button>
+                <div class="ms-auto">
+                    <span class="text-muted">Showing <span id="historyCount">0</span> entries</span>
+                </div>
+            </div>
+
+            <div class="history-list amg-panel" id="historyList">
+                <div class="empty-state">
+                    <i class='bx bx-history'></i>
+                    <p>No history yet. Start converting to see your history here!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="screen" id="settings-screen">
+            <div class="screen-header">
+                <h1>
+                    <i class='bx bx-cog'></i>
+                    System Settings
+                </h1>
+                <p>Configure your preferences and options</p>
+            </div>
+            <div class="settings-content amg-panel">
+                <i class='bx bx-cog' style="font-size: 64px; color: #04BFAD; margin-bottom: 20px;"></i>
+                <p>Settings options will be implemented here...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+
+        function expandSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            
+            // Only expand if currently collapsed
+            if (sidebar.classList.contains('collapsed')) {
+                sidebar.classList.remove('collapsed');
+                mainContent.classList.remove('expanded');
+            }
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('expanded');
+        }
+
+        function switchScreen(screenName) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.getElementById(screenName + '-screen').classList.add('active');
+            document.querySelector(`[data-screen="${screenName}"]`).classList.add('active');
+            
+            if (screenName === 'history' && window.historyModule) {
+                window.historyModule.initializeHistory();
+            }
+        }
+
+        function closeWindow() {
+            console.log('Close window');
+        }
+
+        function minimizeWindow() {
+            console.log('Minimize window');
+        }
+
+        function maximizeWindow() {
+            console.log('Maximize window');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            switchScreen('dashboard');
+        });
+    </script>
+
+    <script src="{{ url_for('static', filename='voice-to-asl.js') }}"></script>
+    <script src="{{ url_for('static', filename='text-to-asl.js') }}"></script>
+    <script src="{{ url_for('static', filename='camera.js') }}"></script>
+    <script src="{{ url_for('static', filename='Three.js') }}"></script>
+    <script src="{{ url_for('static', filename='history.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

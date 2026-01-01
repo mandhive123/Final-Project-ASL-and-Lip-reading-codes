@@ -1,0 +1,31 @@
+# Ignore Python virtual environments
+asl_env/
+asl_env_311/
+asl_env_py311/
+asl_env_py312/
+venv/
+.env/
+
+# Ignore Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+
+# Ignore Node.js dependencies
+node_modules/
+
+# Ignore system and editor files
+.vscode/
+.DS_Store
+
+# Ignore large or generated model files
+*.h5
+*.keras
+*.pth
+*.pkl
+*.json
+*.mp4
+*.avi
+*.mov
