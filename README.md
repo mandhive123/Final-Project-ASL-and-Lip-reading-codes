@@ -332,7 +332,7 @@ SOFTWARE.
 
 ## 👥 Authors
 
-- **Your Name** - *Initial work* - [mandhive123](https://github.com/mandhive123)
+- Bihansith Mandhive Kamburugamuwa - Software Engineering Intern - [mandhive123](https://github.com/mandhive123)
 
 ---
 
