@@ -350,7 +350,7 @@ SOFTWARE.
 ## 📞 Contact & Support
 
 - **GitHub Issues**: [Report a bug](https://github.com/mandhive123/Final-Project-ASL-and-Lip-reading-codes/issues)
-- **Email**: your.email@example.com
+- **Email**: bihansithmandhiveharischandra@gmail.com
 - **Documentation**: See `HOW_TO_RUN.txt` for detailed setup
 
 ---
